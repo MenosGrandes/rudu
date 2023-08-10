@@ -35,6 +35,7 @@ impl CliParser {
               if it is N or fewer levels below the command line
               argument;  --max-depth=0 is the same as --summarize")
                     .value_parser(value_parser!(u8))
+                    .long("max_depth")
             )
             .get_matches();
 
