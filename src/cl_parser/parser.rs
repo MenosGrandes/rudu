@@ -38,7 +38,13 @@ impl CliParser {
             )
             .get_matches();
 
-        println!("{:?}", matches.get_one::<PathBuf>("FILE"));
-        CliOption::default()
+        let mut options = CliOption::default();
+        if let Some(path) = matches.get_one::<PathBuf>("FILE") {
+            options.file = path.to_path_buf();
+        }
+        if let Some(max_depth) = matches.get_one::<u8>("max_depth") {
+            options.max_depth = *max_depth;
+        }
+        options
     }
 }

@@ -1,7 +1,8 @@
 use std::{
+    env,
     fs::{self, DirEntry},
     io,
-    path::Path, env,
+    path::Path,
 };
 
 use crate::cl_parser::parser::CliOption;
@@ -38,8 +39,14 @@ impl DuDefault {
         Ok(())
     }
     pub fn run(self, options: CliOption) -> Result<(), DuError> {
+        let width = 8;
+        let  precision= 8;
         let _ = self.visit(options.file.as_path(), &|file| {
-            println!("{:?} {:?}", file.metadata().unwrap().len(), file.path().strip_prefix(env::current_dir().unwrap()));
+            println!(
+                "{:<width$.precision$} | {}",
+                file.metadata().unwrap().len(),
+                file.path().strip_prefix(env::current_dir().unwrap()).unwrap().display()
+            );
         });
 
         Ok(())
